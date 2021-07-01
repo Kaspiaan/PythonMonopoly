@@ -6,7 +6,8 @@ import csv
 import requests
 import xml.etree.ElementTree as ET
 
-from Property import Property, Location, Transport, Utility
+from Property import Property, Location, Transport, Utility, Special, Go, CommunityChest, Chance, Tax, Jail, FreeSpace, \
+    GoToJail
 
 
 def roll_dice():
@@ -22,20 +23,30 @@ def roll_two():
 
 
 def init_board():
-    board = [[[" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "]],
-             [[" "], "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", [" "]],
-             [[" "], "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", [" "]],
-             [[" "], "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", [" "]],
-             [[" "], "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", [" "]],
-             [[" "], "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", [" "]],
-             [[" "], "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", [" "]],
-             [[" "], "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", [" "]],
-             [[" "], "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", [" "]],
-             [[" "], "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", [" "]],
-             [[" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "], [" "]],
-             ]
-    return board
+    GO = Go()
+    community_chest = CommunityChest()
+    chance = Chance()
+    income_tax = Tax("Income Tax", "ITX", 100)
+    super_tax = Tax("Super Tax", "STX", 200)
+    jail = Jail()
+    free_space = FreeSpace()
+    go_to_jail = GoToJail()
 
+    player_board = [[("", [" "]), ("", [" "]), ("", [" "]), ("", [" "]), ("", [" "]), ("", [" "]), ("", [" "]), ("", [" "]), ("", [" "]), ("", [" "]), ("", [" "])],
+             [("", [" "]), "", "", "", "", "", "", "", "", "", ("", [" "])],
+             [("", [" "]), "", "", "", "", "", "", "", "", "", ("", [" "])],
+             [("", [" "]), "", "", "", "", "", "", "", "", "", ("", [" "])],
+             [("", [" "]), "", "", "", "", "", "", "", "", "", ("", [" "])],
+             [("", [" "]), "", "", "", "", "", "", "", "", "", ("", [" "])],
+             [("", [" "]), "", "", "", "", "", "", "", "", "", ("", [" "])],
+             [("", [" "]), "", "", "", "", "", "", "", "", "", ("", [" "])],
+             [("", [" "]), "", "", "", "", "", "", "", "", "", ("", [" "])],
+             [("", [" "]), "", "", "", "", "", "", "", "", "", ("", [" "])],
+             [("", [" "]), ("", [" "]), ("", [" "]), ("", [" "]), ("", [" "]), ("", [" "]), ("", [" "]), ("", [" "]), ("", [" "]), ("", [" "]), ("", [" "])],
+             ]
+    return player_board
+
+#TODO: Reset board to exist with 0,0 top left instead of 1,1
 
 def init_players(player_list, board):
     name_list = []
@@ -84,6 +95,10 @@ def update_board(player_x, player_y, old_x, old_y, board, player):
     return board
 
 
+def update_board(board, player_list):
+
+
+
 def place_player(player_x, player_y, player, board):
     board[player_y - 1][player_x - 1] = [player]
     return board
@@ -120,9 +135,10 @@ def parse_properties():
         if i.tag == "utility":
             utility_list.append(Utility(i[0].text, i[1].text, i[2].text, i[3].text, i[4].text))
     #print(root)
-    print(len(location_list))
-    print(len(transport_list))
-    print(len(utility_list))
+    for i in location_list:
+        print(i)
+    #print(len(location_list))
+
 
 def main():
     player = Player.Player("P")

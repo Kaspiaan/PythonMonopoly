@@ -358,4 +358,9 @@
         <one_owned_rent>4</one_owned_rent>
         <two_owned_rent>10</two_owned_rent>
     </utility>
+    <community_chest>
+        <Text></Text>
+        <Action></Action>
+        <Amount></Amount>
+    </community_chest>
 </properties_list>

@@ -7,6 +7,8 @@ class Player:
         self.houses_owned = 0
         self.hotels_owned = 0
         self.get_out_of_jail_cards_owned = 0
+        self.is_bankrupt = False
+        self.properties = []
 
     def set_x(self, new_x):
         self.x = new_x
